@@ -14,34 +14,23 @@ class ViewController: UIViewController {
     @IBOutlet weak private var answerTextLabel: UILabel!
 
     @IBAction private func didTapCalculationButton(_ sender: Any) {
-        // "割る数","割られる数"が適切かの判定
-        let canCaluculate: Bool = judgeCorrectNumber(String1: beDividedTextField.text ?? "", String2: dividedTextField.text ?? "")
+        guard let beDivided = Float(beDividedTextField.text ?? "") else {
+            ouputActionSheet(messageText: "割られる数を入力して下さい")
+            return
+        }
+
+        guard let divided = Float(dividedTextField.text ?? "") else {
+            ouputActionSheet(messageText: "割る数を入力して下さい")
+            return
+        }
+
+        guard divided != 0 else {
+            ouputActionSheet(messageText: "割る数には0を入力しないで下さい")
+            return
+        }
 
         // 割り算の計算・出力
-        if canCaluculate {
-            if let beDividedFloat = Float(beDividedTextField.text ?? ""), let dividedFloat = Float(dividedTextField.text ?? "") {
-                let answerFloat = calculateDivide(num1: beDividedFloat, num2: dividedFloat)
-                answerTextLabel.text = String(answerFloat)
-            } else {
-                return
-            }
-        }
-
-    }
-
-    private func judgeCorrectNumber(String1: String, String2: String) -> Bool {
-        if String1 == "" {
-            ouputActionSheet(messageText: "割られる数を入力して下さい")
-            return false
-        } else if String2 == "" {
-            ouputActionSheet(messageText: "割る数を入力して下さい")
-            return false
-        } else if String2 == "0" {
-            ouputActionSheet(messageText: "割る数には0を入力しないで下さい")
-            return false
-        } else {
-            return true
-        }
+        answerTextLabel.text = String(beDivided / divided)
     }
 
     private func ouputActionSheet(messageText: String) {
@@ -57,9 +46,4 @@ class ViewController: UIViewController {
 
         present(alert, animated: true, completion: nil)
     }
-
-    private func calculateDivide(num1:Float, num2:Float) -> Float {
-        num1/num2
-    }
 }
-
