@@ -13,6 +13,20 @@ class ViewController: UIViewController {
     @IBOutlet weak private var dividedTextField: UITextField!
     @IBOutlet weak private var answerTextLabel: UILabel!
 
+    private func ouputActionSheet(messageText: String) {
+        let alert = UIAlertController(
+            title: "課題5",
+            message: messageText,
+            preferredStyle: .alert)
+
+        let ok = UIAlertAction(
+            title: "OK",
+            style: .default)
+            alert.addAction(ok)
+
+        present(alert, animated: true, completion: nil)
+    }
+
     @IBAction private func didTapCalculationButton(_ sender: Any) {
         guard let beDivided = Float(beDividedTextField.text ?? "") else {
             ouputActionSheet(messageText: "割られる数を入力して下さい")
@@ -33,17 +47,4 @@ class ViewController: UIViewController {
         answerTextLabel.text = String(beDivided / divided)
     }
 
-    private func ouputActionSheet(messageText: String) {
-        let alert = UIAlertController(
-            title: "課題5",
-            message: messageText,
-            preferredStyle: .alert)
-
-        let ok = UIAlertAction(
-            title: "OK",
-            style: .default)
-            alert.addAction(ok)
-
-        present(alert, animated: true, completion: nil)
-    }
 }
